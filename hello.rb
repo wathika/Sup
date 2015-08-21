@@ -1,6 +1,21 @@
 require "cuba"
+require "cuba/safe"
+
+Cuba.use(Rack::Session::Cookie, :secret => "__a_very_long_string__")
+
+Cuba.plugin Cuba::Safe
 
 Cuba.define do
+
+  on csrf.unsafe? do
+    csrf.reset!
+
+    res.status = 403
+    res.write("Not authorized")
+
+    halt(res.finish)
+  end  #protecting an app against attacks
+
   # on get do
   #   on "Hello" do
   #     res.write ("Hello World!")
@@ -10,6 +25,9 @@ Cuba.define do
   #   end
   # end
   # only GET requests
+
+
+  #Here's an example showcasing how different matchers work:
   on get do
 
     # /
