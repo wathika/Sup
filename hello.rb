@@ -15,6 +15,7 @@ Cuba.define do
 
     halt(res.finish)
   end  #protecting an app against attacks
+        #You have to include csrf.form_tag in your forms and csrf.meta_tag among your meta tags. 
 
   # on get do
   #   on "Hello" do
